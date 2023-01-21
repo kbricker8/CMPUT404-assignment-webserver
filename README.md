@@ -7,6 +7,21 @@ See requirements.org (plain-text) for a description of the project.
 
 Make a simple webserver.
 
+Student:
+Kyle Bricker - kbricker
+
+Collaboration
+=============
+Ashutosh Lambda
+
+References
+==========
+For parsing received data, sending files, and formatting the header reference was taken from the following;
+Author: Emalsha
+Blog Link: https://emalsha.wordpress.com/
+https://emalsha.wordpress.com/2016/11/24/how-create-http-server-using-python-socket-part-ii/
+
+
 Contributors / Licensing
 ========================
 
@@ -23,4 +38,3 @@ But the server.py example is derived from the python documentation
 examples thus some of the code is Copyright © 2001-2013 Python
 Software Foundation; All Rights Reserved under the PSF license (GPL
 compatible) http://docs.python.org/2/library/socketserver.html
-

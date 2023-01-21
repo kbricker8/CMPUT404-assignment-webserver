@@ -1,4 +1,5 @@
 #  coding: utf-8 
+import os
 import socketserver
 
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
@@ -33,24 +34,39 @@ class MyWebServer(socketserver.BaseRequestHandler):
         self.data = self.request.recv(1024).strip()
         print ("Got a request of: %s\n" % self.data)
 
+        # Reference taken from
+        # Author: Emalsha - https://emalsha.wordpress.com/
         # https://emalsha.wordpress.com/2016/11/24/how-create-http-server-using-python-socket-part-ii/
 
         # parse the arguments
         args = self.data.decode('utf-8').split(' ') # split the recieved data
-        method = args[0] # this is like GET or POST
+        method = args[0] # this must be GET or returns 405
         requested = args[1] # get the requested file/folder
 
+        # Check the desired method is GET
+        if method != 'GET':
+            header = 'HTTP/1.1 405 Method Not Allowed\r\n'
+            final_response = header.encode('utf-8')
+            self.request.sendall(final_response)
+            return
+
         filepath = requested.lstrip('/')
+        filepath = 'www/' + filepath
         if filepath == '': # no filepath specified, go to default index.html
-            filepath = 'www/index.html'
-        else: # add www/ to filepath as is never specified when calling the URL
-            filepath = 'www/' + filepath
+            filepath = 'index.html'
+        elif os.path.isdir(filepath):
+            if not filepath.endswith('/'): # 301
+                header = 'HTTP/1.1 301 Moved Permanently\r\nLocation: http://127.0.0.1:8080/' + filepath.lstrip('www/') + '/\r\n'
+                final_response = header.encode('utf-8')
+                self.request.sendall(final_response)
+                return
+            filepath += 'index.html'
 
         # This will try to find, read and send the desired file back to the connected client. If no such file is found then we return 404 Not Found
         try:
-            if (filepath.endswith('.html')):
+            if filepath.endswith('.html'):
                 mimetype = 'text/html'
-            elif (filepath.endswith('.css')):
+            elif filepath.endswith('.css'):
                 mimetype = 'text/css'
             else: # html not specified in file path but could still be desired
                 mimetype = 'text/html'
@@ -64,8 +80,8 @@ class MyWebServer(socketserver.BaseRequestHandler):
             header = 'HTTP/1.1 200 OK\nContent-Type: ' + mimetype + '\n\n'
 
         except Exception as e:
-            header = 'HTTP/1.1 404 Not Found\n\n'
-            response = '<html><body><h3>Error 404: File not found</h3></body></html>'.encode('utf-8')
+            header = 'HTTP/1.1 404 Not Found\r\n\n'
+            response = '<html><body><h3>Error 404: File not found</h3></body></html>\n'.encode('utf-8')
 
         # Package up our final response to send to the client
         final_response = header.encode('utf-8')
