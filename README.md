@@ -17,9 +17,9 @@ Ashutosh Lamba - alamba
 
 References
 ==========
-For parsing received data, sending files, and formatting the header reference was taken from the following;
-Author: Emalsha
-Blog Link: https://emalsha.wordpress.com/
+For parsing received data, sending files, and formatting the header reference was taken from the following;<br>
+Author: Emalsha<br>
+Blog Link: https://emalsha.wordpress.com/<br>
 https://emalsha.wordpress.com/2016/11/24/how-create-http-server-using-python-socket-part-ii/
 
 Images
