@@ -24,8 +24,8 @@ https://emalsha.wordpress.com/2016/11/24/how-create-http-server-using-python-soc
 
 Images
 ======
-![Alt text]()
-![Alt text]()
+![Alt text](https://github.com/kbricker8/CMPUT404-assignment-webserver/blob/master/root.png)
+![Alt text](https://github.com/kbricker8/CMPUT404-assignment-webserver/blob/master/deep.png)
 
 Contributors / Licensing
 ========================
