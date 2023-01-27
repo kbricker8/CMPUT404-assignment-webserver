@@ -1,4 +1,6 @@
 #  coding: utf-8 
+# License 2023 Kyle Bricker
+
 import os
 import socketserver
 
@@ -52,9 +54,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
 
         filepath = requested.lstrip('/')
         filepath = 'www/' + filepath
-        if filepath == '': # no filepath specified, go to default index.html
-            filepath = 'index.html'
-        elif os.path.isdir(filepath):
+        if os.path.isdir(filepath):
             if not filepath.endswith('/'): # 301
                 header = 'HTTP/1.1 301 Moved Permanently\r\nLocation: http://127.0.0.1:8080/' + filepath.lstrip('www/') + '/\r\n'
                 final_response = header.encode('utf-8')
